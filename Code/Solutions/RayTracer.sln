@@ -1,0 +1,88 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.23107.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "RayTracer", "..\Projects\RayTracer\RayTracer.vcxproj", "{4B389023-AD32-4D0A-9F00-D68FAB752639}"
+	ProjectSection(ProjectDependencies) = postProject
+		{7C4D7AD5-688E-4002-956C-C35CF3F67FD9} = {7C4D7AD5-688E-4002-956C-C35CF3F67FD9}
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Projects", "Projects", "{67A5DAB4-4F28-4D2B-A93B-6C14FDEE7D9C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tools", "Tools", "{607C4899-01B4-487C-860D-FA0B55D33CB6}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CopyData", "..\Tools\CopyData\CopyData.vcxproj", "{7C4D7AD5-688E-4002-956C-C35CF3F67FD9}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "External", "External", "{502CF216-0421-48DF-901B-2BFF4035CB1F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Eigen", "Eigen", "{1494664E-70F5-4816-B6DF-6C01D971A22D}"
+	ProjectSection(SolutionItems) = preProject
+		..\External\Eigen\Array = ..\External\Eigen\Array
+		..\External\Eigen\Cholesky = ..\External\Eigen\Cholesky
+		..\External\Eigen\CholmodSupport = ..\External\Eigen\CholmodSupport
+		..\External\Eigen\Core = ..\External\Eigen\Core
+		..\External\Eigen\Dense = ..\External\Eigen\Dense
+		..\External\Eigen\Eigen = ..\External\Eigen\Eigen
+		..\External\Eigen\Eigen2Support = ..\External\Eigen\Eigen2Support
+		..\External\Eigen\Eigenvalues = ..\External\Eigen\Eigenvalues
+		..\External\Eigen\Geometry = ..\External\Eigen\Geometry
+		..\External\Eigen\Householder = ..\External\Eigen\Householder
+		..\External\Eigen\IterativeLinearSolvers = ..\External\Eigen\IterativeLinearSolvers
+		..\External\Eigen\Jacobi = ..\External\Eigen\Jacobi
+		..\External\Eigen\LeastSquares = ..\External\Eigen\LeastSquares
+		..\External\Eigen\LU = ..\External\Eigen\LU
+		..\External\Eigen\MetisSupport = ..\External\Eigen\MetisSupport
+		..\External\Eigen\OrderingMethods = ..\External\Eigen\OrderingMethods
+		..\External\Eigen\PardisoSupport = ..\External\Eigen\PardisoSupport
+		..\External\Eigen\PaStiXSupport = ..\External\Eigen\PaStiXSupport
+		..\External\Eigen\QR = ..\External\Eigen\QR
+		..\External\Eigen\QtAlignedMalloc = ..\External\Eigen\QtAlignedMalloc
+		..\External\Eigen\Sparse = ..\External\Eigen\Sparse
+		..\External\Eigen\SparseCholesky = ..\External\Eigen\SparseCholesky
+		..\External\Eigen\SparseCore = ..\External\Eigen\SparseCore
+		..\External\Eigen\SparseLU = ..\External\Eigen\SparseLU
+		..\External\Eigen\SparseQR = ..\External\Eigen\SparseQR
+		..\External\Eigen\SPQRSupport = ..\External\Eigen\SPQRSupport
+		..\External\Eigen\StdDeque = ..\External\Eigen\StdDeque
+		..\External\Eigen\StdList = ..\External\Eigen\StdList
+		..\External\Eigen\StdVector = ..\External\Eigen\StdVector
+		..\External\Eigen\SuperLUSupport = ..\External\Eigen\SuperLUSupport
+		..\External\Eigen\SVD = ..\External\Eigen\SVD
+		..\External\Eigen\UmfPackSupport = ..\External\Eigen\UmfPackSupport
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4B389023-AD32-4D0A-9F00-D68FAB752639}.Debug|x64.ActiveCfg = Debug|x64
+		{4B389023-AD32-4D0A-9F00-D68FAB752639}.Debug|x64.Build.0 = Debug|x64
+		{4B389023-AD32-4D0A-9F00-D68FAB752639}.Debug|x86.ActiveCfg = Debug|Win32
+		{4B389023-AD32-4D0A-9F00-D68FAB752639}.Debug|x86.Build.0 = Debug|Win32
+		{4B389023-AD32-4D0A-9F00-D68FAB752639}.Release|x64.ActiveCfg = Release|x64
+		{4B389023-AD32-4D0A-9F00-D68FAB752639}.Release|x64.Build.0 = Release|x64
+		{4B389023-AD32-4D0A-9F00-D68FAB752639}.Release|x86.ActiveCfg = Release|Win32
+		{4B389023-AD32-4D0A-9F00-D68FAB752639}.Release|x86.Build.0 = Release|Win32
+		{7C4D7AD5-688E-4002-956C-C35CF3F67FD9}.Debug|x64.ActiveCfg = Debug|x64
+		{7C4D7AD5-688E-4002-956C-C35CF3F67FD9}.Debug|x64.Build.0 = Debug|x64
+		{7C4D7AD5-688E-4002-956C-C35CF3F67FD9}.Debug|x86.ActiveCfg = Debug|Win32
+		{7C4D7AD5-688E-4002-956C-C35CF3F67FD9}.Debug|x86.Build.0 = Debug|Win32
+		{7C4D7AD5-688E-4002-956C-C35CF3F67FD9}.Release|x64.ActiveCfg = Release|x64
+		{7C4D7AD5-688E-4002-956C-C35CF3F67FD9}.Release|x64.Build.0 = Release|x64
+		{7C4D7AD5-688E-4002-956C-C35CF3F67FD9}.Release|x86.ActiveCfg = Release|Win32
+		{7C4D7AD5-688E-4002-956C-C35CF3F67FD9}.Release|x86.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{4B389023-AD32-4D0A-9F00-D68FAB752639} = {67A5DAB4-4F28-4D2B-A93B-6C14FDEE7D9C}
+		{7C4D7AD5-688E-4002-956C-C35CF3F67FD9} = {607C4899-01B4-487C-860D-FA0B55D33CB6}
+		{1494664E-70F5-4816-B6DF-6C01D971A22D} = {502CF216-0421-48DF-901B-2BFF4035CB1F}
+	EndGlobalSection
+EndGlobal

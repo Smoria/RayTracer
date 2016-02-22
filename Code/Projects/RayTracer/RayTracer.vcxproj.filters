@@ -1,0 +1,180 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="include">
+      <UniqueIdentifier>{f768388b-1488-47be-8511-ee319aaf593e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source">
+      <UniqueIdentifier>{405d75f3-516b-42ea-9cf1-d78c4fa27a9e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\obj">
+      <UniqueIdentifier>{d62d1a37-905f-405f-94f5-db6d63b77362}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source\obj">
+      <UniqueIdentifier>{bd786b1d-3c28-4da1-b250-303cc0728093}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\png">
+      <UniqueIdentifier>{73aa5130-8a8c-44f3-a4b3-43e9e444e27f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source\png">
+      <UniqueIdentifier>{5663782e-3f3f-4c2c-8b2e-94d2e8dccccc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\bmp">
+      <UniqueIdentifier>{e432f01e-2a1a-43eb-aaa9-f4fdfdc78821}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\Collections">
+      <UniqueIdentifier>{8c2ca242-8df3-438a-aafa-20c332fc08b4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\Camera">
+      <UniqueIdentifier>{3f3c53c0-2e05-468c-a254-d82f8a5e3718}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\Math">
+      <UniqueIdentifier>{5f77d053-f25e-43e6-a754-9854cb0d3eab}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\RayTracer">
+      <UniqueIdentifier>{212b3062-e4c6-4f75-a166-3fa7c77b9036}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source\RayTracer">
+      <UniqueIdentifier>{666db5c2-39c9-483b-afa8-0daad5b2bead}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\RayTracer\Geometry">
+      <UniqueIdentifier>{d93f9fb1-ba7a-4b83-8a69-e0a331c66ea2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source\RayTracer\Geometry">
+      <UniqueIdentifier>{47ca250f-010d-4404-90d6-dd6e17bf0c4c}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="sources\main.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\obj\CObjFile.cpp">
+      <Filter>source\obj</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\png\lodepng.cpp">
+      <Filter>source\png</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\png\lodepng_util.cpp">
+      <Filter>source\png</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\RayTracer\Color.cpp">
+      <Filter>source\RayTracer</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\RayTracer\Geometry\Geometry.cpp">
+      <Filter>source\RayTracer\Geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\Bitmap.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\RayTracer\Geometry\Plane.cpp">
+      <Filter>source\RayTracer\Geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\RayTracer\Geometry\LimitedPlane.cpp">
+      <Filter>source\RayTracer\Geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\RayTracer\Geometry\Sphere.cpp">
+      <Filter>source\RayTracer\Geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\RayTracer\Scene.cpp">
+      <Filter>source\RayTracer</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\RayTracer\Ray.cpp">
+      <Filter>source\RayTracer</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\RayTracer\VectorOperations.cpp">
+      <Filter>source\RayTracer</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\RayTracer\RayTracer.cpp">
+      <Filter>source\RayTracer</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="include\obj\CObjFile.h">
+      <Filter>include\obj</Filter>
+    </ClInclude>
+    <ClInclude Include="include\MinimalValue.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\png\lodepng.h">
+      <Filter>include\png</Filter>
+    </ClInclude>
+    <ClInclude Include="include\png\lodepng_util.h">
+      <Filter>include\png</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Collections\CConstSize1DArray.h">
+      <Filter>include\Collections</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Collections\CConstSize2DArray.h">
+      <Filter>include\Collections</Filter>
+    </ClInclude>
+    <ClInclude Include="include\bmp\SaveToBMP.h">
+      <Filter>include\bmp</Filter>
+    </ClInclude>
+    <ClInclude Include="include\bmp\GenerateImageDataByShader.h">
+      <Filter>include\bmp</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Camera\COrthographicCamera.h">
+      <Filter>include\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Camera\CPerspectiveCamera.h">
+      <Filter>include\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Camera\CCamera.h">
+      <Filter>include\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Camera\CViewRectangle.h">
+      <Filter>include\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Math\Matrix.h">
+      <Filter>include\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Math\Equals.h">
+      <Filter>include\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="include\RayTracer\Ray.h">
+      <Filter>include\RayTracer</Filter>
+    </ClInclude>
+    <ClInclude Include="include\RayTracer\Definitions.h">
+      <Filter>include\RayTracer</Filter>
+    </ClInclude>
+    <ClInclude Include="include\RayTracer\Color.h">
+      <Filter>include\RayTracer</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Bitmap.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Macroses.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\ColorsUnion.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\RayTracer\VectorOperations.h">
+      <Filter>include\RayTracer</Filter>
+    </ClInclude>
+    <ClInclude Include="include\RayTracer\Geometry\LimitedPlane.h">
+      <Filter>include\RayTracer\Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="include\RayTracer\Geometry\Geometry.h">
+      <Filter>include\RayTracer\Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="include\RayTracer\Geometry\Plane.h">
+      <Filter>include\RayTracer\Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="include\RayTracer\Geometry\Sphere.h">
+      <Filter>include\RayTracer\Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="include\UnusedVar.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\RayTracer\RaySource.h">
+      <Filter>include\RayTracer</Filter>
+    </ClInclude>
+    <ClInclude Include="include\RayTracer\Scene.h">
+      <Filter>include\RayTracer</Filter>
+    </ClInclude>
+    <ClInclude Include="include\RayTracer\RayTracer.h">
+      <Filter>include\RayTracer</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
