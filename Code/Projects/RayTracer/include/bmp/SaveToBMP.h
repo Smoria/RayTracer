@@ -1,5 +1,4 @@
-#ifndef SAVETOBMP_H_INCLUDED
-#define SAVETOBMP_H_INCLUDED
+#pragma once
 
 #define NOMINMAX
 
@@ -19,12 +18,13 @@ namespace bmp
 
         const size_t pixelBytes = sizeof(T);
         const size_t pixelBits = pixelBytes * 8;
+        const size_t paddingSize = ((4 - pixelBytes) * imageWidth) % 4;
 
         bfh.bfType = 0x4D42;
         bfh.bfOffBits = sizeof(bfh) + sizeof(bih);
         bfh.bfSize = bfh.bfOffBits +
             sizeof(pixelBytes) * imageWidth * imageHeight +
-            imageHeight * (((4 - pixelBytes) * imageWidth) % 4);
+            imageHeight * paddingSize;
         memset(&bih, 0, sizeof(bih));
         bih.biSize = sizeof(bih);
         bih.biBitCount = pixelBits;
@@ -35,7 +35,7 @@ namespace bmp
         bih.biPlanes = 1;
 
         HANDLE hFile = CreateFile(fileName.c_str(), GENERIC_WRITE, 0, NULL, CREATE_ALWAYS, 0, NULL);
-        if (hFile == INVALID_HANDLE_VALUE)
+        if(hFile == INVALID_HANDLE_VALUE)
             return;
 
         DWORD RW;
@@ -43,19 +43,18 @@ namespace bmp
         WriteFile(hFile, &bih, sizeof(bih), &RW, NULL);
 
         const uint32_t null = 0;
+        const size_t bufferSize = imageWidth * pixelBytes;
 
-        for (size_t i = 0; i < imageHeight; i++)
+        for(size_t i = 0; i < imageHeight; i++)
         {
-            for (size_t j = 0; j < imageWidth; j++)
-            {
-                const T& color = data[i][j];
-                WriteFile(hFile, &color, pixelBytes, &RW, NULL);
-            }
+            WriteFile(hFile, &data[i], bufferSize, &RW, NULL);
 
-            WriteFile(hFile, &null, ((4 - pixelBytes) * imageWidth) % 4, &RW, NULL);
+            if(paddingSize > 0)
+            {
+                WriteFile(hFile, &null, paddingSize, &RW, NULL);
+            }
         }
+
         CloseHandle(hFile);
     }
 }
-
-#endif /*SAVETOBMP_H_INCLUDED*/

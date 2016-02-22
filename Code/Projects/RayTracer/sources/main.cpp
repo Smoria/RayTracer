@@ -74,14 +74,14 @@ void main()
     ball3->Refraction() = 1;
     ball3->RefractionCoeff() = refraction_helium;
 
-    RaySource raySource(Color(255,255,255), Vector3(25, 20, 10));
+    RaySource raySource(Color(255, 255, 255), Vector3(25, 20, 10));
 
     const Vector2 cameraPane = Vector2(1.6, 0.9);
     const Vector3 cameraPosition = Vector3(0, 10, -50);
     Scene scene(cameraPane, cameraPosition, refraction_air,
     { raySource },
-        { floor, back, left, right,
-            ball0, ball1, ball2, ball3 });
+    { floor, back, left, right,
+        ball0, ball1, ball2, ball3 });
 
 
     const std::string fileName1("1.bmp");
@@ -93,7 +93,7 @@ void main()
         auto& pixel = (*g_upsampledBitmap)
             [static_cast<size_t>(position.y())]
             [static_cast<size_t>(position.x())];
-        pixel.rgbRed = static_cast<BYTE>(255*color.GetRed());
+        pixel.rgbRed = static_cast<BYTE>(255 * color.GetRed());
         pixel.rgbGreen = static_cast<BYTE>(255 * color.GetGreen());
         pixel.rgbBlue = static_cast<BYTE>(255 * color.GetBlue());
         pixel.rgbReserved = 0;
@@ -103,17 +103,17 @@ void main()
 
     const size_t squaredUpsampling = upsampling * upsampling;
     TBitMapPtr downsampled = std::make_unique<TBitMap>();
-    for (size_t _ux = 0; _ux < upsampledPictureWidth; _ux += upsampling)
+    for(size_t _ux = 0; _ux < upsampledPictureWidth; _ux += upsampling)
     {
-        for (size_t _uy = 0; _uy < upsampledPictureHeight; _uy += upsampling)
+        for(size_t _uy = 0; _uy < upsampledPictureHeight; _uy += upsampling)
         {
             size_t summR = 0;
             size_t summG = 0;
             size_t summB = 0;
 
-            for (size_t i = 0; i < upsampling; ++i)
+            for(size_t i = 0; i < upsampling; ++i)
             {
-                for (size_t j = 0; j < upsampling; ++j)
+                for(size_t j = 0; j < upsampling; ++j)
                 {
                     auto& upsampledPixel = (*g_upsampledBitmap)[_uy][_ux];
                     summR += upsampledPixel.rgbRed;
