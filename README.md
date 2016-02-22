@@ -2,6 +2,7 @@
 Some advanced light ray tracing shit
 
 [Wiki Page](https://github.com/Smoria/RayTracer/wiki)
+
 This is junk storage, I don't want to format that document for now... or maybe forever.
 
 # Origins
