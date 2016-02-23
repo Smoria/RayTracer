@@ -1,6 +1,7 @@
 #include "RayTracer/RayTracer.h"
 #include "RayTracer/Scene.h"
 #include <thread>
+#include <mutex>
 #include <iostream>
 
 namespace RayTracer
@@ -17,18 +18,32 @@ namespace RayTracer
     {
         const size_t rowsPerThread = screenHeight / threadsCount;
 
+        std::mutex lock;
         std::set<std::thread*> threads;
 
+        int current_pixel = 0;
         for (size_t threadNumber = 0; threadNumber < threadsCount; ++threadNumber)
         {
-            threads.insert(new std::thread([&scene, this,
+            threads.insert(new std::thread([&scene, this, &lock, &current_pixel,
                 screenWidth, screenHeight, threadNumber, rowsPerThread]()
             {
-                Run(scene, screenWidth, screenHeight,
-                    0,
-                    threadNumber * rowsPerThread,
-                    screenWidth,
-                    (threadNumber + 1) * rowsPerThread);
+                while (true)
+                {
+                    lock.lock();
+                    const int target_pixel = current_pixel++;
+                    lock.unlock();
+
+                    if (target_pixel >= screenWidth * screenHeight)
+                    {
+                        break;
+                    }
+
+                    const int x = target_pixel % screenWidth;
+                    const int y = target_pixel / screenWidth;
+                    Ray ray = CreateMainRay(scene, x, y, screenWidth, screenHeight);
+                    Color col = ray.Trace(0);
+                    OnHitScreen(col, Vector2(x, y));
+                }
             }));
         }
 
@@ -51,11 +66,8 @@ namespace RayTracer
             for (int y = sY; y < eY; ++y)
             {
                 Ray ray = CreateMainRay(scene, x, y, screenWidth, screenHeight);
-                //OnHitScreen(Color(255, 0, 0), position);
-
-                const Vector2 position(x, y);
                 Color col = ray.Trace(0);
-                OnHitScreen(col, position);
+                OnHitScreen(col, Vector2(x, y));
             }
         }
     }
