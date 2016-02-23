@@ -14,4 +14,8 @@ This is junk storage, I don't want to format that document for now... or maybe f
 
 [Lux Renderer galery](http://www.luxrender.net/forum/gallery2.php?g2_itemId=243)
 
+[Distance functions](http://iquilezles.org/www/articles/distfunctions/distfunctions.htm)
+
+[Fractal distance functions](http://blog.hvidtfeldts.net/index.php/2011/08/distance-estimated-3d-fractals-iii-folding-space/)
+
 ![](http://wiki.opengatecollaboration.org/images/9/9e/Reflections_Specular_Diffuse_Spread.gif)
