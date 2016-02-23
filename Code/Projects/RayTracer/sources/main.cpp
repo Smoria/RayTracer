@@ -17,8 +17,8 @@ void main()
     const double refraction_air = 1.000293;
     const double refraction_helium = 1.000036;
     const size_t upsampling = 1;
-    const size_t threadsCount = 4;
-    const size_t pictureWidth = 3200 * 2;
+    const size_t threadsCount = 2;
+    const size_t pictureWidth = 3200 * 8;
     const size_t pictureHeight = (pictureWidth / 16) * 9;
     const size_t upsampledPictureWidth = pictureWidth * upsampling;
     const size_t upsampledPictureHeight = pictureHeight * upsampling;
@@ -112,6 +112,13 @@ void main()
         pixel.rgbGreen = static_cast<BYTE>(255 * color.GetGreen());
         pixel.rgbBlue = static_cast<BYTE>(255 * color.GetBlue());
         pixel.rgbReserved = 0;
+
+        const int totalPixelsCount = pictureHeight * pictureWidth;
+        const int currentPixel = position.x() + position.y()* pictureWidth;
+        if (currentPixel % (totalPixelsCount / 10) == 0)
+        {
+            std::cout << 100.0 * (double)currentPixel / (double)totalPixelsCount << '%' << std::endl;
+        }
     });
 
     std::cout << "Ray tracing" << std::endl;

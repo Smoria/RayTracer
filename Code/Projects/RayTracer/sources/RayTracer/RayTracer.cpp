@@ -16,8 +16,6 @@ namespace RayTracer
 
     void RayTracer::Run(Scene& scene, int screenWidth, int screenHeight, size_t threadsCount)
     {
-        const size_t rowsPerThread = screenHeight / threadsCount;
-
         std::mutex lock;
         std::set<std::thread*> threads;
 
@@ -25,7 +23,7 @@ namespace RayTracer
         for (size_t threadNumber = 0; threadNumber < threadsCount; ++threadNumber)
         {
             threads.insert(new std::thread([&scene, this, &lock, &current_pixel,
-                screenWidth, screenHeight, threadNumber, rowsPerThread]()
+                screenWidth, screenHeight, threadNumber]()
             {
                 while (true)
                 {
