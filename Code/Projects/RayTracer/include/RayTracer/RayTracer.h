@@ -18,7 +18,7 @@ namespace RayTracer
                 return m_hitScreenCallbacks.insert(callback).second;
             }
 
-            void Run(Scene& scene, int screenWidth, int screenHeight);
+            void Run(Scene& scene, int screenWidth, int screenHeight, size_t threadsCount);
             void Run(Scene& scene, int screenWidth, int screenHeight, int sX, int sY, int eX, int eY);
             void RunSingleRay(Scene scene, int screenWidth, int screenHeight, int x, int y);
             Ray CreateMainRay(Scene& scene, int screenX, int screenY, int screenWidth, int screenHeight);

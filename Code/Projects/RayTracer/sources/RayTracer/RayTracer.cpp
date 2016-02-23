@@ -13,21 +13,22 @@ namespace RayTracer
         OnHitScreen(color, Vector2(x, y));
     }
 
-    void RayTracer::Run(Scene& scene, int screenWidth, int screenHeight)
+    void RayTracer::Run(Scene& scene, int screenWidth, int screenHeight, size_t threadsCount)
     {
-        Run(scene, screenWidth, screenHeight, 0, 0, screenWidth, screenHeight);
-
-        const size_t threadsCount = 8;
         const size_t rowsPerThread = screenHeight / threadsCount;
 
         std::set<std::thread*> threads;
 
         for (size_t threadNumber = 0; threadNumber < threadsCount; ++threadNumber)
         {
-            threads.insert(new std::thread([&]()
+            threads.insert(new std::thread([&scene, this,
+                screenWidth, screenHeight, threadNumber, rowsPerThread]()
             {
-                Run(scene, screenWidth, screenHeight, 0, threadNumber * rowsPerThread,
-                    screenWidth, threadNumber * rowsPerThread);
+                Run(scene, screenWidth, screenHeight,
+                    0,
+                    threadNumber * rowsPerThread,
+                    screenWidth,
+                    (threadNumber + 1) * rowsPerThread);
             }));
         }
 

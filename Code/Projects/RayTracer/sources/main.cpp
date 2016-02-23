@@ -9,7 +9,8 @@
 
 static const double refraction_air = 1.000293;
 static const double refraction_helium = 1.000036;
-const size_t upsampling = 4;
+const size_t upsampling = 1;
+const size_t threadsCount = 4;
 const size_t pictureWidth = 3200;
 const size_t pictureHeight = (pictureWidth / 16) * 9;
 const size_t upsampledPictureWidth = pictureWidth * upsampling;
@@ -99,7 +100,7 @@ void main()
         pixel.rgbReserved = 0;
     });
 
-    rayTracer.Run(scene, upsampledPictureWidth, upsampledPictureHeight);
+    rayTracer.Run(scene, upsampledPictureWidth, upsampledPictureHeight, threadsCount);
 
     const size_t squaredUpsampling = upsampling * upsampling;
     TBitMapPtr downsampled = std::make_unique<TBitMap>();
