@@ -8,33 +8,46 @@
 #include <iostream>
 #include "Stopwatch.h"
 
-static const double refraction_air = 1.000293;
-static const double refraction_helium = 1.000036;
-const size_t upsampling = 1;
-const size_t threadsCount = 4;
-const size_t pictureWidth = 3200;
-const size_t pictureHeight = (pictureWidth / 16) * 9;
-const size_t upsampledPictureWidth = pictureWidth * upsampling;
-const size_t upsampledPictureHeight = pictureHeight * upsampling;
-
 template<size_t w, size_t h>
 using BitMap = Collections::CConstSize2DArray<w, h, RGBQUAD>;
 
-using TBitMap = BitMap<pictureWidth, pictureHeight>;
-using TBitMapPtr = std::unique_ptr<TBitMap>;
-
-using TUpsampledBitMap = BitMap<upsampledPictureWidth, upsampledPictureHeight>;
-using TUpsampledBitMapPtr = std::unique_ptr<TUpsampledBitMap>;
-
-TUpsampledBitMapPtr g_upsampledBitmap = std::make_unique<TUpsampledBitMap>();
-
 void main()
 {
+#pragma region Constants
+    const double refraction_air = 1.000293;
+    const double refraction_helium = 1.000036;
+    const size_t upsampling = 1;
+    const size_t threadsCount = 4;
+    const size_t pictureWidth = 3200 * 2;
+    const size_t pictureHeight = (pictureWidth / 16) * 9;
+    const size_t upsampledPictureWidth = pictureWidth * upsampling;
+    const size_t upsampledPictureHeight = pictureHeight * upsampling;
+    const std::string filename("1.bmp");
+
+    if (upsampling > 1)
+    {
+        std::cout << "Upsampling rate: " << upsampling << std::endl;
+        std::cout << "Upsampled picture width: " << upsampledPictureWidth << std::endl;
+        std::cout << "Upsampled picture height: " << upsampledPictureHeight << std::endl;
+    }
+    std::cout << "Threads count: " << threadsCount << std::endl;
+    std::cout << "Output picture width: " << pictureWidth << std::endl;
+    std::cout << "Output picture height: " << pictureHeight << std::endl;
+    std::cout << "Output filename: " << filename << std::endl;
+#pragma endregion
+#pragma region Usings
+    using TBitMap = BitMap<pictureWidth, pictureHeight>;
+    using TBitMapPtr = std::unique_ptr<TBitMap>;
+
+    using TUpsampledBitMap = BitMap<upsampledPictureWidth, upsampledPictureHeight>;
+    using TUpsampledBitMapPtr = std::unique_ptr<TUpsampledBitMap>;
+
     using Geom = RayTracer::Geometry::Geometry;
     using Tracer = RayTracer::RayTracer;
     using namespace RayTracer;
     using namespace Geometry;
-
+#pragma endregion
+#pragma region Scene Preparing
     std::cout << "Preparing scene" << std::endl;
     auto back = new Plane(Vector3(0, 0, 40), Vector3(0, 0, -1));
     back->Diffuse() = Color(255, 255, 255);
@@ -85,15 +98,14 @@ void main()
     { raySource },
     { floor, back, left, right,
         ball0, ball1, ball2, ball3 });
-
-
-    const std::string fileName1("1.bmp");
-
+#pragma endregion
+#pragma region Ray tracing
     Tracer rayTracer;
+    TUpsampledBitMapPtr upsampledBitmap = std::make_unique<TUpsampledBitMap>();
     rayTracer.AddOnHitScreen(
         [&](const Color& color, const Vector2& position) -> void
     {
-        auto& pixel = (*g_upsampledBitmap)
+        auto& pixel = (*upsampledBitmap)
             [static_cast<size_t>(position.y())]
             [static_cast<size_t>(position.x())];
         pixel.rgbRed = static_cast<BYTE>(255 * color.GetRed());
@@ -107,45 +119,56 @@ void main()
     rayTracer.Run(scene, upsampledPictureWidth, upsampledPictureHeight, threadsCount);
     std::cout << "Ray tracing duration: " << stopwatch.GetElapsedTime<std::chrono::seconds>()
         << " seconds." << std::endl;
-
-    std::cout << "Downsampling (x" << upsampling << ')' << std::endl;
-    stopwatch.Start();
-    const size_t squaredUpsampling = upsampling * upsampling;
-    TBitMapPtr downsampled = std::make_unique<TBitMap>();
-    for(size_t _ux = 0; _ux < upsampledPictureWidth; _ux += upsampling)
+#pragma endregion
+#pragma region Downsampling
+    TBitMapPtr downsampledBitmap = nullptr;
+    if (upsampling > 1)
     {
-        for(size_t _uy = 0; _uy < upsampledPictureHeight; _uy += upsampling)
+        std::cout << "Downsampling (x" << upsampling << ')' << std::endl;
+        stopwatch.Start();
+        const size_t squaredUpsampling = upsampling * upsampling;
+        TBitMapPtr downsampledBitmap = std::make_unique<TBitMap>();
+        for (size_t _ux = 0; _ux < upsampledPictureWidth; _ux += upsampling)
         {
-            size_t summR = 0;
-            size_t summG = 0;
-            size_t summB = 0;
-
-            for(size_t i = 0; i < upsampling; ++i)
+            for (size_t _uy = 0; _uy < upsampledPictureHeight; _uy += upsampling)
             {
-                for(size_t j = 0; j < upsampling; ++j)
+                size_t summR = 0;
+                size_t summG = 0;
+                size_t summB = 0;
+
+                for (size_t i = 0; i < upsampling; ++i)
                 {
-                    auto& upsampledPixel = (*g_upsampledBitmap)[_uy][_ux];
-                    summR += upsampledPixel.rgbRed;
-                    summG += upsampledPixel.rgbGreen;
-                    summB += upsampledPixel.rgbBlue;
+                    for (size_t j = 0; j < upsampling; ++j)
+                    {
+                        auto& upsampledPixel = (*upsampledBitmap)[_uy][_ux];
+                        summR += upsampledPixel.rgbRed;
+                        summG += upsampledPixel.rgbGreen;
+                        summB += upsampledPixel.rgbBlue;
+                    }
                 }
+
+                auto& downsampledPixel = (*downsampledBitmap)[_uy / upsampling][_ux / upsampling];
+                downsampledPixel.rgbRed = summR / squaredUpsampling;
+                downsampledPixel.rgbGreen = summG / squaredUpsampling;
+                downsampledPixel.rgbBlue = summB / squaredUpsampling;
             }
-
-            auto& downsampledPixel = (*downsampled)[_uy / upsampling][_ux / upsampling];
-            downsampledPixel.rgbRed = summR / squaredUpsampling;
-            downsampledPixel.rgbGreen = summG / squaredUpsampling;
-            downsampledPixel.rgbBlue = summB / squaredUpsampling;
         }
-    }
-    std::cout << "Downsampling duration: " << stopwatch.GetElapsedTime<std::chrono::seconds>()
-        << " seconds." << std::endl;
+        std::cout << "Downsampling duration: " << stopwatch.GetElapsedTime<std::chrono::seconds>()
+            << " seconds." << std::endl;
 
+        //Release upsampled
+        upsampledBitmap = nullptr;
+    }
+#pragma endregion
+#pragma region Saving
     std::cout << "Saving to bmp" << std::endl;
     stopwatch.Start();
-    bmp::SaveToBMP(fileName1, *downsampled);
+    bmp::SaveToBMP(filename, upsampling > 1 ? *downsampledBitmap : *upsampledBitmap);
     std::cout << "Save duration: " << stopwatch.GetElapsedTime<std::chrono::seconds>()
         << " seconds." << std::endl;
-    system(fileName1.c_str());
+#pragma endregion
+
+    system(filename.c_str());
 
     std::cout << "Press any key to continue..." << std::endl;
     std::cin.get();
