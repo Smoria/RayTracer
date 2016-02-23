@@ -181,6 +181,7 @@
     <ClInclude Include="include\RayTracer\RayTracer.h" />
     <ClInclude Include="include\RayTracer\Scene.h" />
     <ClInclude Include="include\RayTracer\VectorOperations.h" />
+    <ClInclude Include="include\Stopwatch.h" />
     <ClInclude Include="include\UnusedVar.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

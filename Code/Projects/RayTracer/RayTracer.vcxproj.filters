@@ -176,5 +176,8 @@
     <ClInclude Include="include\RayTracer\RayTracer.h">
       <Filter>include\RayTracer</Filter>
     </ClInclude>
+    <ClInclude Include="include\Stopwatch.h">
+      <Filter>include</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

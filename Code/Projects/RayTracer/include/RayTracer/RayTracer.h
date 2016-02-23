@@ -1,8 +1,21 @@
 #pragma once
 
 #include <set>
+#include <functional>
+
 #include "Ray.h"
 #include "Definitions.h"
+
+template <class Function>
+struct FunctionsComparator
+{
+    bool operator()(const Function& f1, const Function& f2) const
+    {
+        auto ptr1 = f1.target<Function>();
+        auto ptr2 = f2.target<Function>();
+        return ptr1 < ptr2;
+    }
+};
 
 namespace RayTracer
 {
@@ -11,9 +24,11 @@ namespace RayTracer
     class RayTracer
     {
         public:
-            using HitScreenCallback = void(*)(const Color&, const Vector2&);
+            using HitScreenCallback = std::function<void(const Color&, const Vector2&)>;
+            using HitScreenCallbacks = std::set<HitScreenCallback,
+                FunctionsComparator<HitScreenCallback>>;
 
-            bool AddOnHitScreen(HitScreenCallback callback)
+            bool AddOnHitScreen(const HitScreenCallback& callback)
             {
                 return m_hitScreenCallbacks.insert(callback).second;
             }
@@ -32,6 +47,6 @@ namespace RayTracer
                 }
             }
 
-            std::set<HitScreenCallback> m_hitScreenCallbacks;
+            HitScreenCallbacks m_hitScreenCallbacks;
     };
 }

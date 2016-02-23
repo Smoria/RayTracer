@@ -4,3 +4,4 @@ Binaries/
 *.opensdf
 Code/Solutions/.vs/
 Code/Solutions/ipch/
+Code/Tools/CopyData/*.log

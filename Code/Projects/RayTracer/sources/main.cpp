@@ -6,6 +6,7 @@
 #include "bmp\SaveToBMP.h"
 #include <memory>
 #include <iostream>
+#include "Stopwatch.h"
 
 static const double refraction_air = 1.000293;
 static const double refraction_helium = 1.000036;
@@ -34,6 +35,7 @@ void main()
     using namespace RayTracer;
     using namespace Geometry;
 
+    std::cout << "Preparing scene" << std::endl;
     auto back = new Plane(Vector3(0, 0, 40), Vector3(0, 0, -1));
     back->Diffuse() = Color(255, 255, 255);
     back->DiffuseCoeff() = 1;
@@ -89,7 +91,7 @@ void main()
 
     Tracer rayTracer;
     rayTracer.AddOnHitScreen(
-        [](const Color& color, const Vector2& position) -> void
+        [&](const Color& color, const Vector2& position) -> void
     {
         auto& pixel = (*g_upsampledBitmap)
             [static_cast<size_t>(position.y())]
@@ -100,8 +102,14 @@ void main()
         pixel.rgbReserved = 0;
     });
 
+    std::cout << "Ray tracing" << std::endl;
+    Stopwatch<std::chrono::high_resolution_clock> stopwatch;
     rayTracer.Run(scene, upsampledPictureWidth, upsampledPictureHeight, threadsCount);
+    std::cout << "Ray tracing duration: " << stopwatch.GetElapsedTime<std::chrono::seconds>()
+        << " seconds." << std::endl;
 
+    std::cout << "Downsampling (x" << upsampling << ')' << std::endl;
+    stopwatch.Start();
     const size_t squaredUpsampling = upsampling * upsampling;
     TBitMapPtr downsampled = std::make_unique<TBitMap>();
     for(size_t _ux = 0; _ux < upsampledPictureWidth; _ux += upsampling)
@@ -129,7 +137,16 @@ void main()
             downsampledPixel.rgbBlue = summB / squaredUpsampling;
         }
     }
+    std::cout << "Downsampling duration: " << stopwatch.GetElapsedTime<std::chrono::seconds>()
+        << " seconds." << std::endl;
 
+    std::cout << "Saving to bmp" << std::endl;
+    stopwatch.Start();
     bmp::SaveToBMP(fileName1, *downsampled);
+    std::cout << "Save duration: " << stopwatch.GetElapsedTime<std::chrono::seconds>()
+        << " seconds." << std::endl;
     system(fileName1.c_str());
+
+    std::cout << "Press any key to continue..." << std::endl;
+    std::cin.get();
 }
