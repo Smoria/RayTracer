@@ -7,9 +7,11 @@
 #include <memory>
 #include <iostream>
 #include "Stopwatch.h"
+#include "RayTracer/Downsampling.h"
+#include "BGR.h"
 
 template<size_t w, size_t h>
-using BitMap = Collections::CConstSize2DArray<w, h, RGBQUAD>;
+using BitMap = Collections::CConstSize2DArray<w, h, BGR>;
 
 void main()
 {
@@ -17,7 +19,7 @@ void main()
     const double refraction_air = 1.000293;
     const double refraction_helium = 1.000036;
     const size_t upsampling = 1;
-    const size_t threadsCount = 4;
+    const size_t threadsCount = 3;
     const size_t pictureWidth = 3200 * 4;
     const size_t pictureHeight = (pictureWidth / 16) * 9;
     const size_t picturePixelsCount = pictureWidth * pictureHeight;
@@ -124,7 +126,7 @@ void main()
     std::cout << "Ray tracing" << std::endl;
     Stopwatch<std::chrono::high_resolution_clock> stopwatch;
     rayTracer.Run(scene, upsampledPictureWidth, upsampledPictureHeight, threadsCount);
-    std::cout << std::endl << "Ray tracing duration: " <<
+    std::cout << "\rRay tracing duration: " <<
         stopwatch.GetElapsedTime<std::chrono::seconds>() << " seconds." << std::endl;
 #pragma endregion
 #pragma region Downsampling
@@ -133,33 +135,8 @@ void main()
     {
         std::cout << "Downsampling (x" << upsampling << ')' << std::endl;
         stopwatch.Start();
-        const size_t squaredUpsampling = upsampling * upsampling;
         TBitMapPtr downsampledBitmap = std::make_unique<TBitMap>();
-        for (size_t _ux = 0; _ux < upsampledPictureWidth; _ux += upsampling)
-        {
-            for (size_t _uy = 0; _uy < upsampledPictureHeight; _uy += upsampling)
-            {
-                size_t summR = 0;
-                size_t summG = 0;
-                size_t summB = 0;
-
-                for (size_t i = 0; i < upsampling; ++i)
-                {
-                    for (size_t j = 0; j < upsampling; ++j)
-                    {
-                        auto& upsampledPixel = (*upsampledBitmap)[_uy][_ux];
-                        summR += upsampledPixel.rgbRed;
-                        summG += upsampledPixel.rgbGreen;
-                        summB += upsampledPixel.rgbBlue;
-                    }
-                }
-
-                auto& downsampledPixel = (*downsampledBitmap)[_uy / upsampling][_ux / upsampling];
-                downsampledPixel.rgbRed = summR / squaredUpsampling;
-                downsampledPixel.rgbGreen = summG / squaredUpsampling;
-                downsampledPixel.rgbBlue = summB / squaredUpsampling;
-            }
-        }
+        MakeDownsampling(*upsampledBitmap, *downsampledBitmap);
         std::cout << "Downsampling duration: " << stopwatch.GetElapsedTime<std::chrono::seconds>()
             << " seconds." << std::endl;
 

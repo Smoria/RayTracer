@@ -19,7 +19,10 @@ namespace RayTracer
         std::mutex lock;
         std::set<std::thread*> threads;
 
+        //Threads will use this number as index of pixel, which they must render
         int next_pixel = 0;
+
+        //Threads will render series of 'queue_size' pixel before updating 'next_pixel'
         const int queue_size = 5;
         const int totalPixelsCount = screenWidth * screenHeight;
         for (size_t threadNumber = 0; threadNumber < threadsCount; ++threadNumber)

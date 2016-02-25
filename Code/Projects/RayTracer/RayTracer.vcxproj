@@ -171,6 +171,7 @@
     <ClInclude Include="include\png\lodepng_util.h" />
     <ClInclude Include="include\RayTracer\Color.h" />
     <ClInclude Include="include\RayTracer\Definitions.h" />
+    <ClInclude Include="include\RayTracer\Downsampling.h" />
     <ClInclude Include="include\RayTracer\Geometry\Geometry.h" />
     <ClInclude Include="include\RayTracer\Geometry\LimitedPlane.h" />
     <ClInclude Include="include\RayTracer\Geometry\Plane.h" />
@@ -181,6 +182,7 @@
     <ClInclude Include="include\RayTracer\RayTracer.h" />
     <ClInclude Include="include\RayTracer\Scene.h" />
     <ClInclude Include="include\RayTracer\VectorOperations.h" />
+    <ClInclude Include="include\BGR.h" />
     <ClInclude Include="include\Stopwatch.h" />
     <ClInclude Include="include\UnusedVar.h" />
   </ItemGroup>
