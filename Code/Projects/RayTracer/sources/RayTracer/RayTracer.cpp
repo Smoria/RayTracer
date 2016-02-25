@@ -19,28 +19,41 @@ namespace RayTracer
         std::mutex lock;
         std::set<std::thread*> threads;
 
-        int current_pixel = 0;
+        int next_pixel = 0;
+        const int queue_size = 5;
+        const int totalPixelsCount = screenWidth * screenHeight;
         for (size_t threadNumber = 0; threadNumber < threadsCount; ++threadNumber)
         {
-            threads.insert(new std::thread([&scene, this, &lock, &current_pixel,
-                screenWidth, screenHeight, threadNumber]()
+            threads.insert(new std::thread([&scene, this, &lock, &next_pixel,
+                screenWidth, totalPixelsCount, screenHeight, queue_size]()
             {
                 while (true)
                 {
                     lock.lock();
-                    const int target_pixel = current_pixel++;
+                    int current_pixel = next_pixel;
+                    const int end_pixel = next_pixel += queue_size;
                     lock.unlock();
 
-                    if (target_pixel >= screenWidth * screenHeight)
+                    bool mustBreak = false;
+                    for (; current_pixel < end_pixel; current_pixel += 1)
+                    {
+                        if (current_pixel >= totalPixelsCount)
+                        {
+                            mustBreak = true;
+                            break;
+                        }
+
+                        const int x = current_pixel % screenWidth;
+                        const int y = current_pixel / screenWidth;
+                        Ray ray = CreateMainRay(scene, x, y, screenWidth, screenHeight);
+                        Color col = ray.Trace(0);
+                        OnHitScreen(col, Vector2(x, y));
+                    }
+
+                    if (mustBreak)
                     {
                         break;
                     }
-
-                    const int x = target_pixel % screenWidth;
-                    const int y = target_pixel / screenWidth;
-                    Ray ray = CreateMainRay(scene, x, y, screenWidth, screenHeight);
-                    Color col = ray.Trace(0);
-                    OnHitScreen(col, Vector2(x, y));
                 }
             }));
         }
