@@ -14,7 +14,7 @@ namespace RayTracer
         const Collections::CConstSize2DArray<upsampledWidth, upsampledHeight, BGR>& input,
         Collections::CConstSize2DArray<downsampledWidth, downsampledHeight, BGR>& output)
     {
-        const size_t rate = upsampledWidth % downsampledWidth;
+        const size_t rate = upsampledWidth / downsampledWidth;
         static_assert(upsampledWidth % downsampledWidth == 0, "");
         static_assert(upsampledHeight % downsampledHeight == 0, "");
         static_assert(upsampledWidth / downsampledWidth
@@ -41,9 +41,9 @@ namespace RayTracer
                 }
 
                 auto& downsampledPixel = (output)[_uy / rate][_ux / rate];
-                downsampledPixel.rgbRed = summR / squaredUpsampling;
-                downsampledPixel.rgbGreen = summG / squaredUpsampling;
-                downsampledPixel.rgbBlue = summB / squaredUpsampling;
+                downsampledPixel.rgbRed =   uint8_t(summR / squaredUpsampling);
+                downsampledPixel.rgbGreen = uint8_t(summG / squaredUpsampling);
+                downsampledPixel.rgbBlue =  uint8_t(summB / squaredUpsampling);
             }
         }
     }

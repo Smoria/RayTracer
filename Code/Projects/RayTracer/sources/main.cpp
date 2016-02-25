@@ -116,7 +116,7 @@ void main()
         pixel.rgbBlue = static_cast<BYTE>(255 * color.GetBlue());
         pixel.rgbReserved = 0;
 
-        const int currentPixel = position.x() + position.y()* pictureWidth;
+        const int currentPixel = static_cast<int>(position.x() + position.y()* pictureWidth);
         if (currentPixel % (picturePixelsCount / 10) == 0)
         {
             printf_s("\r%2.f%%", 100.0 * (double)currentPixel / (double)picturePixelsCount);
