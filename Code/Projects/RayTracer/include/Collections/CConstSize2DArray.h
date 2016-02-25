@@ -5,7 +5,7 @@
 
 namespace Collections
 {
-    template<size_t rowSize, size_t rowCount, class T>
+    template<size_t rowSize, size_t rowCount, class T, bool is_static = true>
     class CConstSize2DArray
     {
         public:

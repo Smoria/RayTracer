@@ -7,8 +7,8 @@
 
 namespace bmp
 {
-    template<size_t imageWidth, size_t imageHeight, class T>
-    void SaveToBMP(const std::string& fileName, const Collections::CConstSize2DArray<imageWidth, imageHeight, T>& data)
+    template<size_t imageWidth, size_t imageHeight, class T, bool is_static>
+    void SaveToBMP(const std::string& fileName, const Collections::CConstSize2DArray<imageWidth, imageHeight, T, is_static>& data)
     {
         BITMAPFILEHEADER bfh;
         BITMAPINFOHEADER bih;

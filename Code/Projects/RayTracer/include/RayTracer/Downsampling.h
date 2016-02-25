@@ -9,10 +9,12 @@ namespace RayTracer
        <size_t upsampledWidth,
         size_t upsampledHeight,
         size_t downsampledWidth,
-        size_t downsampledHeight>
+        size_t downsampledHeight,
+        bool input_is_static,
+        bool output_is_static>
     void MakeDownsampling(
-        const Collections::CConstSize2DArray<upsampledWidth, upsampledHeight, BGR>& input,
-        Collections::CConstSize2DArray<downsampledWidth, downsampledHeight, BGR>& output)
+        const Collections::CConstSize2DArray<upsampledWidth, upsampledHeight, BGR, input_is_static>& input,
+        Collections::CConstSize2DArray<downsampledWidth, downsampledHeight, BGR, output_is_static>& output)
     {
         const size_t rate = upsampledWidth / downsampledWidth;
         static_assert(upsampledWidth % downsampledWidth == 0, "");

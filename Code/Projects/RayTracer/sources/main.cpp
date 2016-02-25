@@ -10,12 +10,13 @@
 #include "RayTracer/Downsampling.h"
 #include "BGR.h"
 
-template<size_t w, size_t h>
-using BitMap = Collections::CConstSize2DArray<w, h, BGR>;
+template<size_t w, size_t h, bool is_static>
+using BitMap = Collections::CConstSize2DArray<w, h, BGR, is_static>;
 
 void main()
 {
 #pragma region Constants
+    const bool bitmapDataInStack = false;
     const double refraction_air = 1.000293;
     const double refraction_helium = 1.000036;
     const size_t upsampling = 1;
@@ -39,10 +40,10 @@ void main()
     std::cout << "Output filename: " << filename << std::endl;
 #pragma endregion
 #pragma region Usings
-    using TBitMap = BitMap<pictureWidth, pictureHeight>;
+    using TBitMap = BitMap<pictureWidth, pictureHeight, bitmapDataInStack>;
     using TBitMapPtr = std::unique_ptr<TBitMap>;
 
-    using TUpsampledBitMap = BitMap<upsampledPictureWidth, upsampledPictureHeight>;
+    using TUpsampledBitMap = BitMap<upsampledPictureWidth, upsampledPictureHeight, bitmapDataInStack>;
     using TUpsampledBitMapPtr = std::unique_ptr<TUpsampledBitMap>;
 
     using Geom = RayTracer::Geometry::Geometry;
