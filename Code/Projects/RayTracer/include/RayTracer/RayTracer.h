@@ -24,13 +24,23 @@ namespace RayTracer
     class RayTracer
     {
         public:
+            template<class T>
+            using TCallbacks = std::set<T, FunctionsComparator<T>>;
+
             using HitScreenCallback = std::function<void(const Color&, const Vector2&)>;
-            using HitScreenCallbacks = std::set<HitScreenCallback,
-                FunctionsComparator<HitScreenCallback>>;
+            using HitScreenCallbacks = TCallbacks<HitScreenCallback>;
+
+            using UpdateProgressCallback = std::function<void(int nextPixel, int maxPixels)>;
+            using UpdateProgressCallbacks = TCallbacks<UpdateProgressCallback>;
 
             bool AddOnHitScreen(const HitScreenCallback& callback)
             {
                 return m_hitScreenCallbacks.insert(callback).second;
+            }
+
+            bool AddOnUpdateProgress(const UpdateProgressCallback& callback)
+            {
+                return m_updateProgressCallbacks.insert(callback).second;
             }
 
             void Run(Scene& scene, int screenWidth, int screenHeight, size_t threadsCount);
@@ -47,6 +57,15 @@ namespace RayTracer
                 }
             }
 
+            void OnUpdateProgress(int nextPixel, int maxPixels)
+            {
+                for (auto& callback : m_updateProgressCallbacks)
+                {
+                    callback(nextPixel, maxPixels);
+                }
+            }
+
             HitScreenCallbacks m_hitScreenCallbacks;
+            UpdateProgressCallbacks m_updateProgressCallbacks;
     };
 }

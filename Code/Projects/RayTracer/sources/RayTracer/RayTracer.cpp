@@ -61,6 +61,23 @@ namespace RayTracer
             }));
         }
 
+        while (true)
+        {
+            lock.lock();
+            const int next_pixel_val = next_pixel;
+            lock.unlock();
+
+            if (next_pixel_val >= totalPixelsCount)
+            {
+                break;
+            }
+
+            OnUpdateProgress(next_pixel_val, totalPixelsCount);
+
+            using namespace std::literals;
+            std::this_thread::sleep_for(500ms);
+        }
+
         for (auto& thread : threads)
         {
             thread->join();

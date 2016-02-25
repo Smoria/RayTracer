@@ -106,6 +106,7 @@ void main()
 #pragma region Ray tracing
     Tracer rayTracer;
     TUpsampledBitMapPtr upsampledBitmap = std::make_unique<TUpsampledBitMap>();
+
     rayTracer.AddOnHitScreen(
         [&](const Color& color, const Vector2& position) -> void
     {
@@ -116,12 +117,11 @@ void main()
         pixel.rgbGreen = static_cast<BYTE>(255 * color.GetGreen());
         pixel.rgbBlue = static_cast<BYTE>(255 * color.GetBlue());
         pixel.rgbReserved = 0;
+    });
 
-        const int currentPixel = static_cast<int>(position.x() + position.y()* pictureWidth);
-        if (currentPixel % (picturePixelsCount / 10) == 0)
-        {
-            printf_s("\r%2.f%%", 100.0 * (double)currentPixel / (double)picturePixelsCount);
-        }
+    rayTracer.AddOnUpdateProgress([](int nextPixel, int maxPixels)
+    {
+        printf_s("\r%2.f%%", 100.0 * (double)nextPixel / (double)maxPixels);
     });
 
     std::cout << "Ray tracing" << std::endl;
