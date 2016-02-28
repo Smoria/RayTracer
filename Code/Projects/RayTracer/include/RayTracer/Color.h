@@ -4,8 +4,6 @@
 #include "ColorsUnion.h"
 #include <ostream>
 
-
-
 namespace RayTracer
 {
     class Color

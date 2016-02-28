@@ -8,6 +8,7 @@
 #include <iostream>
 #include "Stopwatch.h"
 #include "RayTracer/Downsampling.h"
+#include "RayTracer/Refraction.h"
 #include "BGR.h"
 
 template<size_t w, size_t h, bool is_static>
@@ -17,8 +18,6 @@ void main()
 {
 #pragma region Constants
     const bool bitmapDataInStack = false;
-    const double refraction_air = 1.000293;
-    const double refraction_helium = 1.000036;
     const size_t upsampling = 1;
     const size_t threadsCount = 3;
     const size_t pictureWidth = 3200 * 4;
@@ -73,16 +72,15 @@ void main()
         Plane::defaultRefractionCoeff, Plane::defaultRefraction, 0.75);
 
     Sphere* ball3 = new Sphere(Vector3(-5, 3, 1), 2.5,
-        Color(153, 255, 255), refraction_helium, 1);
+        Color(153, 255, 255), Refraction::helium, 1);
 
     RaySource raySource(Color(255, 255, 255), Vector3(25, 20, 10));
 
     const Vector2 cameraPane = Vector2(1.6, 0.9);
     const Vector3 cameraPosition = Vector3(0, 10, -50);
-    Scene scene(cameraPane, cameraPosition, refraction_air,
-    { raySource },
-    { floor, back, left, right,
-        ball0, ball1, ball2, ball3 });
+    Scene scene(cameraPane, cameraPosition, Refraction::air,
+    { raySource }, { floor, back, left, right, ball0, ball1, ball2, ball3 });
+
 #pragma endregion
 #pragma region Ray tracing
     Tracer rayTracer;

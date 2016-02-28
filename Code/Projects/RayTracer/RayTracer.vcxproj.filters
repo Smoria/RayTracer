@@ -185,5 +185,8 @@
     <ClInclude Include="include\BGR.h">
       <Filter>include</Filter>
     </ClInclude>
+    <ClInclude Include="include\RayTracer\Refraction.h">
+      <Filter>include\RayTracer</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

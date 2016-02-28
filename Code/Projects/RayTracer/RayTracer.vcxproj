@@ -180,6 +180,7 @@
     <ClInclude Include="include\ColorsUnion.h" />
     <ClInclude Include="include\RayTracer\RaySource.h" />
     <ClInclude Include="include\RayTracer\RayTracer.h" />
+    <ClInclude Include="include\RayTracer\Refraction.h" />
     <ClInclude Include="include\RayTracer\Scene.h" />
     <ClInclude Include="include\RayTracer\VectorOperations.h" />
     <ClInclude Include="include\BGR.h" />
