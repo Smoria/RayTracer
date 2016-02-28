@@ -6,10 +6,25 @@ namespace RayTracer
 {
     namespace Geometry
     {
-        Plane::Plane(const Vector3& position, const Vector3& normal, const Type& UVScale)
-            : Geometry(position),
-            m_UVScale(UVScale),
-            m_normal(normal.normalized())
+        const Type Plane::defaultUVScale = 30;
+
+        Plane::Plane(const Vector3& position,
+            const Vector3& normal,
+            const Color& diffuse,
+            const Type& refractionCoeff,
+            const Type& refraction,
+            const Type& reflection,
+            const Type& shininessCoeff,
+            const Type& specularCoeff,
+            const Type& diffuseCoeff,
+            const Bitmap& texture,
+            const Bitmap& normalTexture,
+            const Type& uvScale) :
+            Geometry(position, diffuse, refractionCoeff, refraction,
+                reflection, shininessCoeff, specularCoeff,
+                diffuseCoeff, texture, normalTexture),
+            m_UVScale(uvScale),
+            m_normal(normal)
         {}
 
         Plane::Plane(const Vector3& p1, const Vector3& p2, const Vector3& p3)

@@ -14,15 +14,15 @@ namespace RayTracer
         {
             public:
                 Geometry(const Vector3& position,
-                        const Color& diffuse = Color(0,0,0),
-                        const Type& refractionCoeff = 1,
-                        const Type& refraction = 0,
-                        const Type& reflection = 0,
-                        const Type& shininessCoeff = 5,
-                        const Type& specularCoeff = 0.5,
-                        const Type& diffuseCoeff = 1,
-                        const Bitmap& texture = Bitmap(),
-                        const Bitmap& normalTexture = Bitmap()
+                        const Color& diffuse = defaultDiffuse,
+                        const Type& refractionCoeff = defaultRefractionCoeff,
+                        const Type& refraction = defaultRefraction,
+                        const Type& reflection = defaultReflection,
+                        const Type& shininessCoeff = defaultShininessCoeff,
+                        const Type& specularCoeff = defaultSpecularCoeff,
+                        const Type& diffuseCoeff = defaultDiffuseCoeff,
+                        const Bitmap& texture = emptyTexture,
+                        const Bitmap& normalTexture = emptyTexture
                     );
 
                 virtual Type Intersects(const Ray& ray) const = 0;
@@ -54,7 +54,7 @@ namespace RayTracer
                 Color& Diffuse() { return m_diffuse; }
                 const Color& Diffuse() const { return m_diffuse; }
 
-         protected:
+            protected:
                 static Vector2 PrepareUV(double u, double v);
 
                 Color m_diffuse;
@@ -67,6 +67,16 @@ namespace RayTracer
                 Vector3 m_position;
                 Bitmap m_texture;
                 Bitmap m_normalTexture;
+
+            public:
+                static const Vector3 defaultDiffuse;
+                static const Type defaultRefractionCoeff;
+                static const Type defaultRefraction;
+                static const Type defaultReflection;
+                static const Type defaultShininessCoeff;
+                static const Type defaultSpecularCoeff;
+                static const Type defaultDiffuseCoeff;
+                static const Bitmap emptyTexture;
         };
     }
 }

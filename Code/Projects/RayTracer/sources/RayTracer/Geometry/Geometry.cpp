@@ -8,6 +8,15 @@ namespace RayTracer
 {
     namespace Geometry
     {
+        const Vector3 Geometry::defaultDiffuse(0, 0, 0);
+        const Type Geometry::defaultRefractionCoeff = 1;
+        const Type Geometry::defaultRefraction = 0;
+        const Type Geometry::defaultReflection = 0;
+        const Type Geometry::defaultShininessCoeff = 5;
+        const Type Geometry::defaultSpecularCoeff = 0.5;
+        const Type Geometry::defaultDiffuseCoeff = 1;
+        const Bitmap Geometry::emptyTexture = Bitmap();
+
         Geometry::Geometry(const Vector3& position, const Color& diffuse,
             const Type& refractionCoeff, const Type& refraction,
             const Type& reflection, const Type& shininessCoeff,

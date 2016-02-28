@@ -7,8 +7,21 @@ namespace RayTracer
 {
     namespace Geometry
     {
-        Sphere::Sphere(const Vector3& position, const Type& radius) :
-            Geometry(position),
+        Sphere::Sphere(const Vector3& position,
+            const Type& radius,
+            const Color& diffuse,
+            const Type& refractionCoeff,
+            const Type& refraction,
+            const Type& reflection,
+            const Type& shininessCoeff,
+            const Type& specularCoeff,
+            const Type& diffuseCoeff,
+            const Bitmap& texture,
+            const Bitmap& normalTexture) :
+            Geometry(position, diffuse, refractionCoeff,
+                refraction, reflection, shininessCoeff,
+                specularCoeff, diffuseCoeff, texture,
+                normalTexture),
             m_radius(radius)
         {}
 

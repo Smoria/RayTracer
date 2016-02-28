@@ -24,17 +24,43 @@ namespace RayTracer
         }
 
         LimitedPlane::LimitedPlane(const Vector3& position,
-            const std::vector<Vector3>& limitedPoint) :
-            LimitedPlane(position, limitedPoint, CalculateNormal(limitedPoint))
+            const std::vector<Vector3>& limitedPoints,
+            const Color& diffuse,
+            const Type& refractionCoeff,
+            const Type& refraction,
+            const Type& reflection,
+            const Type& shininessCoeff,
+            const Type& specularCoeff,
+            const Type& diffuseCoeff,
+            const Bitmap& texture,
+            const Bitmap& normalTexture,
+            const Type& uvScale) :
+            Plane(position, CalculateNormal(limitedPoints),
+                diffuse, refractionCoeff, refraction,
+                reflection, shininessCoeff, specularCoeff,
+                diffuseCoeff, texture, normalTexture),
+            m_limitPoints(limitedPoints)
         {}
 
         LimitedPlane::LimitedPlane(const Vector3& position,
-            const std::vector<Vector3>& limitedPoint,
-            const Vector3& normal) :
-            Plane(position, normal),
-            m_limitPoints(limitedPoint)
+            const std::vector<Vector3>& limitedPoints,
+            const Vector3& normal,
+            const Color& diffuse,
+            const Type& refractionCoeff,
+            const Type& refraction,
+            const Type& reflection,
+            const Type& shininessCoeff,
+            const Type& specularCoeff,
+            const Type& diffuseCoeff,
+            const Bitmap& texture,
+            const Bitmap& normalTexture,
+            const Type& uvScale) :
+            Plane(position, normal, diffuse, refractionCoeff,
+                refraction, reflection, shininessCoeff,
+                specularCoeff, diffuseCoeff, texture, normalTexture),
+            m_limitPoints(limitedPoints)
         {
-            if (limitedPoint.size() < 3)
+            if (limitedPoints.size() < 3)
             {
                 throw std::exception();
             }

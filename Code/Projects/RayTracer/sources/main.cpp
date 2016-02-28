@@ -53,46 +53,27 @@ void main()
 #pragma endregion
 #pragma region Scene Preparing
     std::cout << "Preparing scene" << std::endl;
-    auto back = new Plane(Vector3(0, 0, 40), Vector3(0, 0, -1));
-    back->Diffuse() = Color(255, 255, 255);
-    back->DiffuseCoeff() = 1;
+    Plane* back = new Plane(Vector3(0, 0, 40), Vector3(0, 0, -1), Color(255, 255, 255));
 
-    auto floor = new Plane(Vector3(0, 0, 0), Vector3(0, 1, 0));
-    floor->Diffuse() = Color(0, 0, 255);
-    floor->DiffuseCoeff() = 1;
-    floor->Reflection() = 0.75;
+    Plane* floor = new Plane(Vector3(0, 0, 0), Vector3(0, 1, 0), Color(0, 0, 255),
+        Plane::defaultRefractionCoeff, Plane::defaultRefraction, 0.75);
 
-    auto left = new Plane(Vector3(-30, 0, 0), Vector3(1, 0, 0));
-    left->Diffuse() = Color(255, 255, 0);
-    left->DiffuseCoeff() = 1;
-    left->Reflection() = 0.2;
+    Plane* left = new Plane(Vector3(-30, 0, 0), Vector3(1, 0, 0), Color(255, 255, 0),
+        Plane::defaultRefractionCoeff, Plane::defaultRefraction, 0.2);
 
-    auto right = new Plane(Vector3(30, 0, 0), Vector3(-1, 0, 0));
-    right->Diffuse() = Color(0, 255, 0);
-    right->DiffuseCoeff() = 1;
-    right->Reflection() = 0;
+    Plane* right = new Plane(Vector3(30, 0, 0), Vector3(-1, 0, 0), Color(0, 255, 0));
 
-    auto ball0 = new Sphere(Vector3(-10, 10, 10), 5);
-    ball0->Diffuse() = Color(255, 165, 0);
-    ball0->DiffuseCoeff() = 1;
-    ball0->Reflection() = 0.75;
+    Sphere* ball0 = new Sphere(Vector3(-10, 10, 10), 5, Color(255, 165, 0),
+        Plane::defaultRefractionCoeff, Plane::defaultRefraction, 0.75);
 
-    auto ball1 = new Sphere(Vector3(10, 0, 10), 5);
-    ball1->Diffuse() = Color(64, 64, 64);
-    ball1->DiffuseCoeff() = 1;
-    ball1->Reflection() = 0.25;
+    Sphere* ball1 = new Sphere(Vector3(10, 0, 10), 5, Color(64, 64, 64),
+        Plane::defaultRefractionCoeff, Plane::defaultRefraction, 0.25);
 
-    auto ball2 = new Sphere(Vector3(5, 3, 1), 2.5);
-    ball2->Diffuse() = Color(255, 0, 0);
-    ball2->DiffuseCoeff() = 1;
-    ball2->Reflection() = 0.75;
+    Sphere* ball2 = new Sphere(Vector3(5, 3, 1), 2.5, Color(255, 0, 0),
+        Plane::defaultRefractionCoeff, Plane::defaultRefraction, 0.75);
 
-    auto ball3 = new Sphere(Vector3(-5, 3, 1), 2.5);
-    ball3->Diffuse() = Color(153, 255, 255);
-    ball3->DiffuseCoeff() = 1;
-    ball3->Reflection() = 0;
-    ball3->Refraction() = 1;
-    ball3->RefractionCoeff() = refraction_helium;
+    Sphere* ball3 = new Sphere(Vector3(-5, 3, 1), 2.5,
+        Color(153, 255, 255), refraction_helium, 1);
 
     RaySource raySource(Color(255, 255, 255), Vector3(25, 20, 10));
 

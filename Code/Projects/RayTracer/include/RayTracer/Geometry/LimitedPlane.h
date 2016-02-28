@@ -14,11 +14,31 @@ namespace RayTracer
                 using Base = Plane;
 
                 LimitedPlane(const Vector3& position,
-                    const std::vector<Vector3>& limitedPoint);
+                    const std::vector<Vector3>& limitedPoints,
+                    const Vector3& normal,
+                    const Color& diffuse = defaultDiffuse,
+                    const Type& refractionCoeff = defaultRefractionCoeff,
+                    const Type& refraction = defaultRefraction,
+                    const Type& reflection = defaultReflection,
+                    const Type& shininessCoeff = defaultShininessCoeff,
+                    const Type& specularCoeff = defaultSpecularCoeff,
+                    const Type& diffuseCoeff = defaultDiffuseCoeff,
+                    const Bitmap& texture = emptyTexture,
+                    const Bitmap& normalTexture = emptyTexture,
+                    const Type& uvScale = defaultUVScale);
 
                 LimitedPlane(const Vector3& position,
-                    const std::vector<Vector3>& limitedPoint,
-                    const Vector3& normal);
+                    const std::vector<Vector3>& limitedPoints,
+                    const Color& diffuse = defaultDiffuse,
+                    const Type& refractionCoeff = defaultRefractionCoeff,
+                    const Type& refraction = defaultRefraction,
+                    const Type& reflection = defaultReflection,
+                    const Type& shininessCoeff = defaultShininessCoeff,
+                    const Type& specularCoeff = defaultSpecularCoeff,
+                    const Type& diffuseCoeff = defaultDiffuseCoeff,
+                    const Bitmap& texture = emptyTexture,
+                    const Bitmap& normalTexture = emptyTexture,
+                    const Type& uvScale = defaultUVScale);
 
                 Type Intersects(const Ray& ray) const override;
 
