@@ -8,19 +8,19 @@ namespace RayTracer
 {
     namespace Geometry
     {
-        const Vector3 Geometry::defaultDiffuse(0, 0, 0);
-        const Type Geometry::defaultRefractionCoeff = 1;
-        const Type Geometry::defaultRefraction = 0;
-        const Type Geometry::defaultReflection = 0;
-        const Type Geometry::defaultShininessCoeff = 5;
-        const Type Geometry::defaultSpecularCoeff = 0.5;
-        const Type Geometry::defaultDiffuseCoeff = 1;
+        const Vector3f Geometry::defaultDiffuse(0, 0, 0);
+        const Float Geometry::defaultRefractionCoeff = 1;
+        const Float Geometry::defaultRefraction = 0;
+        const Float Geometry::defaultReflection = 0;
+        const Float Geometry::defaultShininessCoeff = 5;
+        const Float Geometry::defaultSpecularCoeff = 0.5;
+        const Float Geometry::defaultDiffuseCoeff = 1;
         const Bitmap Geometry::emptyTexture = Bitmap();
 
-        Geometry::Geometry(const Vector3& position, const Color& diffuse,
-            const Type& refractionCoeff, const Type& refraction,
-            const Type& reflection, const Type& shininessCoeff,
-            const Type& specularCoeff, const Type& diffuseCoeff,
+        Geometry::Geometry(const Vector3f& position, const Color& diffuse,
+            const Float& refractionCoeff, const Float& refraction,
+            const Float& reflection, const Float& shininessCoeff,
+            const Float& specularCoeff, const Float& diffuseCoeff,
             const Bitmap& texture, const Bitmap& normalTexture) :
                 m_diffuse(diffuse),
                 m_diffuseCoeff(diffuseCoeff),
@@ -34,8 +34,8 @@ namespace RayTracer
                 m_normalTexture(normalTexture)
         {}
 
-        Vector3 Geometry::GetNormalAtPointFromMap(const Vector3& point,
-            const Vector3& normal) const
+        Vector3f Geometry::GetNormalAtPointFromMap(const Vector3f& point,
+            const Vector3f& normal) const
         {
             if (m_normalTexture.Empty())
             {
@@ -46,8 +46,8 @@ namespace RayTracer
                 normal, GetUV(point));
         }
 
-        Vector3 Geometry::GetNormalAtPointFromMap(const Vector3& point,
-            const Vector3& normal, const Vector2& uv) const
+        Vector3f Geometry::GetNormalAtPointFromMap(const Vector3f& point,
+            const Vector3f& normal, const Vector2f& uv) const
         {
             if (!m_normalTexture.Empty())
             {
@@ -55,24 +55,24 @@ namespace RayTracer
                 const size_t y = static_cast<size_t>((m_normalTexture.GetHeight() - 1) * uv.y());
                 const Color normalCol = Color::FromColorsUnion(m_normalTexture.GetPixel(x, y));
 
-                return (Vector3(normalCol.GetRed() - 0.5, normalCol.GetGreen() - 0.5,
+                return (Vector3f(normalCol.GetRed() - 0.5, normalCol.GetGreen() - 0.5,
                     normalCol.GetBlue() - 0.5) * 2 + normal).normalized();
             }
 
             return normal;
         }
 
-        Vector3 Geometry::GetIntersectPoint(const Ray& ray, Type length)
+        Vector3f Geometry::GetIntersectPoint(const Ray& ray, Float length)
         {
             return ray.Origin() + length * ray.Direction().normalized();
         }
 
-        Color Geometry::Shade(const Ray& ray, const Vector3& hitPoint, Color& color,
-            const Vector3* normal, Color lightColor, Type lightIntensity)
+        Color Geometry::Shade(const Ray& ray, const Vector3f& hitPoint, Color& color,
+            const Vector3f* normal, Color lightColor, Float lightIntensity)
         {
             double l = 1;
             double specular = 0;
-            const Vector2 uv = GetUV(hitPoint);
+            const Vector2f uv = GetUV(hitPoint);
 
             Color col = m_diffuse;
 
@@ -80,17 +80,17 @@ namespace RayTracer
             {
                 if (normal != nullptr)
                 {
-                    const Vector3 n = GetNormalAtPointFromMap(hitPoint, *normal, uv);
-                    const Vector3 dir = ray.Direction().normalized();
-                    const Vector3 refl = Reflect(dir, n);
+                    const Vector3f n = GetNormalAtPointFromMap(hitPoint, *normal, uv);
+                    const Vector3f dir = ray.Direction().normalized();
+                    const Vector3f refl = Reflect(dir, n);
                     // Lambertian
                     
-                    l = lightIntensity * m_diffuseCoeff * std::max<Type>(0, n.dot(dir));
+                    l = lightIntensity * m_diffuseCoeff * std::max<Float>(0, n.dot(dir));
 
                     // Blinn-Phong
-                    Vector3 surfaceToCamera = (hitPoint - ray.Origin());
+                    Vector3f surfaceToCamera = (hitPoint - ray.Origin());
                     surfaceToCamera.normalize();
-                    const Type cosAngle = std::max<Type>(0, surfaceToCamera.dot(refl));
+                    const Float cosAngle = std::max<Float>(0, surfaceToCamera.dot(refl));
                     specular = lightIntensity * m_specularCoeff * std::pow(cosAngle, m_shininessCoeff);
                 }
             }
@@ -104,7 +104,7 @@ namespace RayTracer
             return color + lightColor * ((col * l) + specular);
         }
 
-        Vector2 Geometry::PrepareUV(double u, double v)
+        Vector2f Geometry::PrepareUV(double u, double v)
         {
             u = u - std::trunc(u);
             v = v - std::trunc(v);
@@ -119,7 +119,7 @@ namespace RayTracer
                 v = 1 + v;
             }
 
-            return Vector2(u, v);
+            return Vector2f(u, v);
         }
     }
 }

@@ -10,33 +10,33 @@ namespace RayTracer
             : public Geometry
         {
             public:
-                Plane(const Vector3& position,
-                    const Vector3& normal,
+                Plane(const Vector3f& position,
+                    const Vector3f& normal,
                     const Color& diffuse = defaultDiffuse,
-                    const Type& refractionCoeff = defaultRefractionCoeff,
-                    const Type& refraction = defaultRefraction,
-                    const Type& reflection = defaultReflection,
-                    const Type& shininessCoeff = defaultShininessCoeff,
-                    const Type& specularCoeff = defaultSpecularCoeff,
-                    const Type& diffuseCoeff = defaultDiffuseCoeff,
+                    const Float& refractionCoeff = defaultRefractionCoeff,
+                    const Float& refraction = defaultRefraction,
+                    const Float& reflection = defaultReflection,
+                    const Float& shininessCoeff = defaultShininessCoeff,
+                    const Float& specularCoeff = defaultSpecularCoeff,
+                    const Float& diffuseCoeff = defaultDiffuseCoeff,
                     const Bitmap& texture = emptyTexture,
                     const Bitmap& normalTexture = emptyTexture,
-                    const Type& uvScale = defaultUVScale);
+                    const Float& uvScale = defaultUVScale);
 
-                Plane(const Vector3& p1, const Vector3& p2, const Vector3& p3);
+                Plane(const Vector3f& p1, const Vector3f& p2, const Vector3f& p3);
 
-                Vector3 GetNormalAtPoint(const Vector3& point) const;
+                Vector3f GetNormalAtPoint(const Vector3f& point) const;
 
-                Vector2 GetUV(const Vector3& point) const override;
+                Vector2f GetUV(const Vector3f& point) const override;
 
-                Type Intersects(const Ray& ray) const override;
+                Float Intersects(const Ray& ray) const override;
 
             protected:
-                Type m_UVScale;
-                Vector3 m_normal;
+                Float m_UVScale;
+                Vector3f m_normal;
 
             public:
-                static const Type defaultUVScale;
+                static const Float defaultUVScale;
         };
     }
 }

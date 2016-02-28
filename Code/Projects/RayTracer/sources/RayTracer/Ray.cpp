@@ -8,10 +8,10 @@
 namespace RayTracer
 {
     Ray::Ray(Scene&scene,
-        const Vector3& origin,
-        const Vector3& previousHit,
-        const Vector3& direction,
-        const Type& envRefractionCoefficient) :
+        const Vector3f& origin,
+        const Vector3f& previousHit,
+        const Vector3f& direction,
+        const Float& envRefractionCoefficient) :
             m_origin(origin),
             m_previousHit(previousHit),
             m_direction(direction),
@@ -24,31 +24,31 @@ namespace RayTracer
         Color color(0,0,0);
 
         Geometry::Geometry* hitGeometry = nullptr;
-        Type hitDistance;
-        Vector3 hit;
+        Float hitDistance;
+        Vector3f hit;
         if (!GetHitPoint(hitGeometry, hitDistance, hit))
         {
             return color;
         }
 
-        Vector3 normal = hitGeometry->GetNormalAtPoint(hit);
+        Vector3f normal = hitGeometry->GetNormalAtPoint(hit);
 
         auto& sceneLights = m_scene.Lights();
         for (int i = 0; i < sceneLights.size(); i++)
         {
             auto& sceneLight = sceneLights[i];
-            Type hitShadowDistance;
-            Vector3 dir = sceneLight.Position() - hit;
+            Float hitShadowDistance;
+            Vector3f dir = sceneLight.Position() - hit;
             dir.normalize();
             Ray lightRay(m_scene,
                 hit + dir * m_scene.GetMinDistance2(),
-                Vector3(), dir,
+                Vector3f(), dir,
                 m_EnvRefractionCoefficient);;
 
 
-            const Type distanceToLight = (lightRay.Origin() - sceneLight.Position()).norm();
+            const Float distanceToLight = (lightRay.Origin() - sceneLight.Position()).norm();
 
-            Vector3 shadowHit;
+            Vector3f shadowHit;
             Geometry::Geometry* hitShadowGeometry;
             if (!lightRay.GetHitPoint(hitShadowGeometry, hitShadowDistance, shadowHit)
                 || hitShadowDistance >= distanceToLight)
@@ -64,10 +64,10 @@ namespace RayTracer
 
         if (hitGeometry->Reflection() > 0)
         {
-            Vector3 dir = Reflect(m_direction, normal);
+            Vector3f dir = Reflect(m_direction, normal);
             Ray reflectionRay = Ray(m_scene,
                 hit + dir * m_scene.GetMinDistance2(),
-                Vector3(0,0,0), dir,
+                Vector3f(0,0,0), dir,
                 m_EnvRefractionCoefficient);
 
             color += reflectionRay.Trace(depth + 1) * hitGeometry->Reflection();
@@ -75,30 +75,30 @@ namespace RayTracer
 
         if (hitGeometry->Refraction() > 0)
         {
-            Type quitCoeff = m_scene.RefractionCoeff();
+            Float quitCoeff = m_scene.RefractionCoeff();
 
-            const Vector3 dir = Refract(m_direction, normal, m_EnvRefractionCoefficient,
+            const Vector3f dir = Refract(m_direction, normal, m_EnvRefractionCoefficient,
                 hitGeometry->RefractionCoeff(), quitCoeff);
 
             Ray refractionRay = Ray(m_scene,
                 hit + dir * m_scene.GetMinDistance2(),
-                Vector3(0,0,0), dir, quitCoeff);
+                Vector3f(0,0,0), dir, quitCoeff);
 
             color += refractionRay.Trace(depth + 1) * hitGeometry->Refraction();
         }
 
         return color;
     }
-    bool Ray::GetHitPoint(Geometry::Geometry*& hitGeometry, Type& hitDistance, Vector3& hitPoint)
+    bool Ray::GetHitPoint(Geometry::Geometry*& hitGeometry, Float& hitDistance, Vector3f& hitPoint)
     {
-        Type minDist = std::numeric_limits<Type>::max();
-        hitDistance = std::numeric_limits<Type>::max();
+        Float minDist = std::numeric_limits<Float>::max();
+        hitDistance = std::numeric_limits<Float>::max();
         hitGeometry = nullptr;
 
         bool valueFound = false;
         for(auto& geom : m_scene.Objects())
         {
-            const Type dist = geom->Intersects(*this);
+            const Float dist = geom->Intersects(*this);
             if (dist > m_scene.GetMinDistance())
             {
                 if (dist < minDist)

@@ -52,32 +52,32 @@ void main()
 #pragma endregion
 #pragma region Scene Preparing
     std::cout << "Preparing scene" << std::endl;
-    Plane* back = new Plane(Vector3(0, 0, 40), Vector3(0, 0, -1), Color(255, 255, 255));
+    Plane* back = new Plane(Vector3f(0, 0, 40), Vector3f(0, 0, -1), Color(255, 255, 255));
 
-    Plane* floor = new Plane(Vector3(0, 0, 0), Vector3(0, 1, 0), Color(0, 0, 255),
+    Plane* floor = new Plane(Vector3f(0, 0, 0), Vector3f(0, 1, 0), Color(0, 0, 255),
         Plane::defaultRefractionCoeff, Plane::defaultRefraction, 0.75);
 
-    Plane* left = new Plane(Vector3(-30, 0, 0), Vector3(1, 0, 0), Color(255, 255, 0),
+    Plane* left = new Plane(Vector3f(-30, 0, 0), Vector3f(1, 0, 0), Color(255, 255, 0),
         Plane::defaultRefractionCoeff, Plane::defaultRefraction, 0.2);
 
-    Plane* right = new Plane(Vector3(30, 0, 0), Vector3(-1, 0, 0), Color(0, 255, 0));
+    Plane* right = new Plane(Vector3f(30, 0, 0), Vector3f(-1, 0, 0), Color(0, 255, 0));
 
-    Sphere* ball0 = new Sphere(Vector3(-10, 10, 10), 5, Color(255, 165, 0),
+    Sphere* ball0 = new Sphere(Vector3f(-10, 10, 10), 5, Color(255, 165, 0),
         Plane::defaultRefractionCoeff, Plane::defaultRefraction, 0.75);
 
-    Sphere* ball1 = new Sphere(Vector3(10, 0, 10), 5, Color(64, 64, 64),
+    Sphere* ball1 = new Sphere(Vector3f(10, 0, 10), 5, Color(64, 64, 64),
         Plane::defaultRefractionCoeff, Plane::defaultRefraction, 0.25);
 
-    Sphere* ball2 = new Sphere(Vector3(5, 3, 1), 2.5, Color(255, 0, 0),
+    Sphere* ball2 = new Sphere(Vector3f(5, 3, 1), 2.5, Color(255, 0, 0),
         Plane::defaultRefractionCoeff, Plane::defaultRefraction, 0.75);
 
-    Sphere* ball3 = new Sphere(Vector3(-5, 3, 1), 2.5,
+    Sphere* ball3 = new Sphere(Vector3f(-5, 3, 1), 2.5,
         Color(153, 255, 255), Refraction::helium, 1);
 
-    RaySource raySource(Color(255, 255, 255), Vector3(25, 20, 10));
+    RaySource raySource(Color(255, 255, 255), Vector3f(25, 20, 10));
 
-    const Vector2 cameraPane = Vector2(1.6, 0.9);
-    const Vector3 cameraPosition = Vector3(0, 10, -50);
+    const Vector2f cameraPane = Vector2f(1.6, 0.9);
+    const Vector3f cameraPosition = Vector3f(0, 10, -50);
     Scene scene(cameraPane, cameraPosition, Refraction::air,
     { raySource }, { floor, back, left, right, ball0, ball1, ball2, ball3 });
 
@@ -87,7 +87,7 @@ void main()
     TUpsampledBitMapPtr upsampledBitmap = std::make_unique<TUpsampledBitMap>();
 
     rayTracer.AddOnHitScreen(
-        [&](const Color& color, const Vector2& position) -> void
+        [&](const Color& color, const Vector2f& position) -> void
     {
         auto& pixel = (*upsampledBitmap)
             [static_cast<size_t>(position.y())]

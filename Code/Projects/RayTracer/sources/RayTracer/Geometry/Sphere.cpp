@@ -7,15 +7,15 @@ namespace RayTracer
 {
     namespace Geometry
     {
-        Sphere::Sphere(const Vector3& position,
-            const Type& radius,
+        Sphere::Sphere(const Vector3f& position,
+            const Float& radius,
             const Color& diffuse,
-            const Type& refractionCoeff,
-            const Type& refraction,
-            const Type& reflection,
-            const Type& shininessCoeff,
-            const Type& specularCoeff,
-            const Type& diffuseCoeff,
+            const Float& refractionCoeff,
+            const Float& refraction,
+            const Float& reflection,
+            const Float& shininessCoeff,
+            const Float& specularCoeff,
+            const Float& diffuseCoeff,
             const Bitmap& texture,
             const Bitmap& normalTexture) :
             Geometry(position, diffuse, refractionCoeff,
@@ -25,33 +25,33 @@ namespace RayTracer
             m_radius(radius)
         {}
 
-        Vector2 Sphere::GetUV(const Vector3& point) const
+        Vector2f Sphere::GetUV(const Vector3f& point) const
         {
-            const Vector3 pos = (point - m_position).normalized();
-            const Type u = 0.5 + std::atan2(pos.z(), pos.x()) / (M_PI * 2);
-            const Type v = 0.5 - std::asin(pos.y()) / M_PI;
+            const Vector3f pos = (point - m_position).normalized();
+            const Float u = 0.5 + std::atan2(pos.z(), pos.x()) / (M_PI * 2);
+            const Float v = 0.5 - std::asin(pos.y()) / M_PI;
 
             return PrepareUV(u, v);
         }
-        Vector3 Sphere::GetNormalAtPoint(const Vector3& point) const
+        Vector3f Sphere::GetNormalAtPoint(const Vector3f& point) const
         {
             return GetNormalAtPointFromMap(point, (point - m_position).normalized());
         }
         double Sphere::Intersects(const Ray& ray) const
         {
-            const Vector3 L = m_position - ray.Origin();
-            const Type tca = L.dot(ray.Direction());
+            const Vector3f L = m_position - ray.Origin();
+            const Float tca = L.dot(ray.Direction());
             if (tca < 0)
                 return 0;
 
-            const Type d2 = L.dot(L) - tca * tca;
-            const Type squareRad = m_radius * m_radius;
+            const Float d2 = L.dot(L) - tca * tca;
+            const Float squareRad = m_radius * m_radius;
             if (d2 > squareRad)
                 return 0;
 
-            const Type thc = std::sqrt(squareRad - d2);
-            Type t0 = tca - thc;
-            Type t1 = tca + thc;
+            const Float thc = std::sqrt(squareRad - d2);
+            Float t0 = tca - thc;
+            Float t1 = tca + thc;
 
             if (t0 > t1)
             {

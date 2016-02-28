@@ -11,7 +11,7 @@ namespace RayTracer
     {
         Ray ray = CreateMainRay(scene, x, y, screenWidth, screenHeight);
         Color color = ray.Trace(0);
-        OnHitScreen(color, Vector2(x, y));
+        OnHitScreen(color, Vector2f(x, y));
     }
 
     void RayTracer::Run(Scene& scene, int screenWidth, int screenHeight, size_t threadsCount)
@@ -50,7 +50,7 @@ namespace RayTracer
                         const int y = current_pixel / screenWidth;
                         Ray ray = CreateMainRay(scene, x, y, screenWidth, screenHeight);
                         Color col = ray.Trace(0);
-                        OnHitScreen(col, Vector2(x, y));
+                        OnHitScreen(col, Vector2f(x, y));
                     }
 
                     if (mustBreak)
@@ -98,7 +98,7 @@ namespace RayTracer
             {
                 Ray ray = CreateMainRay(scene, x, y, screenWidth, screenHeight);
                 Color col = ray.Trace(0);
-                OnHitScreen(col, Vector2(x, y));
+                OnHitScreen(col, Vector2f(x, y));
             }
         }
     }
@@ -107,14 +107,14 @@ namespace RayTracer
         Scene& scene, int screenX, int screenY,
         int screenWidth, int screenHeight)
     {
-        const Type focalLength = scene.CameraPane().x() / scene.CameraPane().y();
-        const Type x = (-(screenWidth / 2) + screenX) * (scene.CameraPane().x() / screenWidth);
-        const Type y = (-(screenHeight / 2) + screenY) * (scene.CameraPane().y() / screenHeight);
-        const Type z = focalLength;
-        const Vector3 dir = Vector3(x, y, z);
-        const Vector3 rayPos = scene.Eye().Origin() + dir;
+        const Float focalLength = scene.CameraPane().x() / scene.CameraPane().y();
+        const Float x = (-(screenWidth / 2) + screenX) * (scene.CameraPane().x() / screenWidth);
+        const Float y = (-(screenHeight / 2) + screenY) * (scene.CameraPane().y() / screenHeight);
+        const Float z = focalLength;
+        const Vector3f dir = Vector3f(x, y, z);
+        const Vector3f rayPos = scene.Eye().Origin() + dir;
 
-        return Ray(scene, rayPos, Vector3(),
+        return Ray(scene, rayPos, Vector3f(),
             (rayPos - scene.Eye().Origin()).normalized(),
             scene.RefractionCoeff());
     }

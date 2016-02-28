@@ -27,7 +27,7 @@ namespace RayTracer
             template<class T>
             using TCallbacks = std::set<T, FunctionsComparator<T>>;
 
-            using HitScreenCallback = std::function<void(const Color&, const Vector2&)>;
+            using HitScreenCallback = std::function<void(const Color&, const Vector2f&)>;
             using HitScreenCallbacks = TCallbacks<HitScreenCallback>;
 
             using UpdateProgressCallback = std::function<void(int nextPixel, int maxPixels)>;
@@ -49,7 +49,7 @@ namespace RayTracer
             Ray CreateMainRay(Scene& scene, int screenX, int screenY, int screenWidth, int screenHeight);
 
         private:
-            void OnHitScreen(const Color& color, const Vector2& position)
+            void OnHitScreen(const Color& color, const Vector2f& position)
             {
                 for (auto& callback : m_hitScreenCallbacks)
                 {

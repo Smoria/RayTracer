@@ -6,12 +6,12 @@ namespace RayTracer
     const size_t Color::m_sGreenIndex = 1;
     const size_t Color::m_sBlueIndex = 2;
 
-    Color::Color(const Vector3& ref) :
+    Color::Color(const Vector3f& ref) :
         Color(ref.x(), ref.y(), ref.z())
     {
     }
 
-    Color::Color(const Type& r, const Type& g, const Type& b) :
+    Color::Color(const Float& r, const Float& g, const Float& b) :
         m_rgb(Clamp(r), Clamp(g), Clamp(b))
     {
     }

@@ -10,24 +10,24 @@ namespace RayTracer
             public Geometry
         {
             public:
-                Sphere(const Vector3& position,
-                    const Type& radius,
+                Sphere(const Vector3f& position,
+                    const Float& radius,
                     const Color& diffuse = defaultDiffuse,
-                    const Type& refractionCoeff = defaultRefractionCoeff,
-                    const Type& refraction = defaultRefraction,
-                    const Type& reflection = defaultReflection,
-                    const Type& shininessCoeff = defaultShininessCoeff,
-                    const Type& specularCoeff = defaultSpecularCoeff,
-                    const Type& diffuseCoeff = defaultDiffuseCoeff,
+                    const Float& refractionCoeff = defaultRefractionCoeff,
+                    const Float& refraction = defaultRefraction,
+                    const Float& reflection = defaultReflection,
+                    const Float& shininessCoeff = defaultShininessCoeff,
+                    const Float& specularCoeff = defaultSpecularCoeff,
+                    const Float& diffuseCoeff = defaultDiffuseCoeff,
                     const Bitmap& texture = emptyTexture,
                     const Bitmap& normalTexture = emptyTexture);
 
-                Vector2 GetUV(const Vector3& point) const override;
-                Vector3 GetNormalAtPoint(const Vector3& point) const override;
+                Vector2f GetUV(const Vector3f& point) const override;
+                Vector3f GetNormalAtPoint(const Vector3f& point) const override;
                 double Intersects(const Ray& ray) const override;
 
             protected:
-                Type m_radius;
+                Float m_radius;
         };
     }
 }

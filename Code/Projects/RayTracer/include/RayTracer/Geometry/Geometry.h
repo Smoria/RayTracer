@@ -13,69 +13,69 @@ namespace RayTracer
         class Geometry
         {
             public:
-                Geometry(const Vector3& position,
+                Geometry(const Vector3f& position,
                         const Color& diffuse = defaultDiffuse,
-                        const Type& refractionCoeff = defaultRefractionCoeff,
-                        const Type& refraction = defaultRefraction,
-                        const Type& reflection = defaultReflection,
-                        const Type& shininessCoeff = defaultShininessCoeff,
-                        const Type& specularCoeff = defaultSpecularCoeff,
-                        const Type& diffuseCoeff = defaultDiffuseCoeff,
+                        const Float& refractionCoeff = defaultRefractionCoeff,
+                        const Float& refraction = defaultRefraction,
+                        const Float& reflection = defaultReflection,
+                        const Float& shininessCoeff = defaultShininessCoeff,
+                        const Float& specularCoeff = defaultSpecularCoeff,
+                        const Float& diffuseCoeff = defaultDiffuseCoeff,
                         const Bitmap& texture = emptyTexture,
                         const Bitmap& normalTexture = emptyTexture
                     );
 
-                virtual Type Intersects(const Ray& ray) const = 0;
-                virtual Vector3 GetNormalAtPoint(const Vector3& point) const = 0;
-                virtual Vector2 GetUV(const Vector3& point) const = 0;
+                virtual Float Intersects(const Ray& ray) const = 0;
+                virtual Vector3f GetNormalAtPoint(const Vector3f& point) const = 0;
+                virtual Vector2f GetUV(const Vector3f& point) const = 0;
 
-                Vector3 GetNormalAtPointFromMap(const Vector3& point,
-                    const Vector3& normal) const;
+                Vector3f GetNormalAtPointFromMap(const Vector3f& point,
+                    const Vector3f& normal) const;
 
-                Vector3 GetNormalAtPointFromMap(const Vector3& point,
-                    const Vector3& normal, const Vector2& uv) const;
+                Vector3f GetNormalAtPointFromMap(const Vector3f& point,
+                    const Vector3f& normal, const Vector2f& uv) const;
 
-                static Vector3 GetIntersectPoint(const Ray& ray, Type length);
+                static Vector3f GetIntersectPoint(const Ray& ray, Float length);
 
-                Color Shade(const Ray& ray, const Vector3& hitPoint, Color& color,
-                    const Vector3* normal, Color lightColor, Type lightIntensity);
+                Color Shade(const Ray& ray, const Vector3f& hitPoint, Color& color,
+                    const Vector3f* normal, Color lightColor, Float lightIntensity);
 
-                Type& Reflection() { return m_reflection; }
+                Float& Reflection() { return m_reflection; }
 
-                Type& Refraction() { return m_refraction; }
-                const Type& Refraction() const { return m_refraction; }
+                Float& Refraction() { return m_refraction; }
+                const Float& Refraction() const { return m_refraction; }
 
-                Type& RefractionCoeff() { return m_refractionCoeff; }
-                const Type& RefractionCoeff() const { return m_refractionCoeff; }
+                Float& RefractionCoeff() { return m_refractionCoeff; }
+                const Float& RefractionCoeff() const { return m_refractionCoeff; }
 
-                Type& DiffuseCoeff() { return m_diffuseCoeff; }
-                const Type& DiffuseCoeff() const { return m_diffuseCoeff; }
+                Float& DiffuseCoeff() { return m_diffuseCoeff; }
+                const Float& DiffuseCoeff() const { return m_diffuseCoeff; }
 
                 Color& Diffuse() { return m_diffuse; }
                 const Color& Diffuse() const { return m_diffuse; }
 
             protected:
-                static Vector2 PrepareUV(double u, double v);
+                static Vector2f PrepareUV(double u, double v);
 
                 Color m_diffuse;
-                Type m_diffuseCoeff;
-                Type m_specularCoeff;
-                Type m_shininessCoeff;
-                Type m_reflection;
-                Type m_refraction;
-                Type m_refractionCoeff;
-                Vector3 m_position;
+                Float m_diffuseCoeff;
+                Float m_specularCoeff;
+                Float m_shininessCoeff;
+                Float m_reflection;
+                Float m_refraction;
+                Float m_refractionCoeff;
+                Vector3f m_position;
                 Bitmap m_texture;
                 Bitmap m_normalTexture;
 
             public:
-                static const Vector3 defaultDiffuse;
-                static const Type defaultRefractionCoeff;
-                static const Type defaultRefraction;
-                static const Type defaultReflection;
-                static const Type defaultShininessCoeff;
-                static const Type defaultSpecularCoeff;
-                static const Type defaultDiffuseCoeff;
+                static const Vector3f defaultDiffuse;
+                static const Float defaultRefractionCoeff;
+                static const Float defaultRefraction;
+                static const Float defaultReflection;
+                static const Float defaultShininessCoeff;
+                static const Float defaultSpecularCoeff;
+                static const Float defaultDiffuseCoeff;
                 static const Bitmap emptyTexture;
         };
     }

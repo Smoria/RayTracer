@@ -4,9 +4,9 @@
 
 namespace RayTracer
 {
-    Vector3 Reflect(const Vector3& target, const Vector3& normal);
+    Vector3f Reflect(const Vector3f& target, const Vector3f& normal);
 
-    Vector3 Refract(const Vector3& target,
-        Vector3 normal, const Type& n1,
-        Type n2, Type& quitN);
+    Vector3f Refract(const Vector3f& target,
+        Vector3f normal, const Float& n1,
+        Float n2, Float& quitN);
 }

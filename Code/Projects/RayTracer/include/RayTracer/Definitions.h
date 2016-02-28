@@ -3,11 +3,17 @@
 
 namespace RayTracer
 {
-    using Type = double;
+    using Float = double;
+    using Integer = int;
 
-    template<size_t rows, size_t columns>
-    using Matrix = Eigen::Matrix<Type, rows, columns>;
+    template<typename T>
+    using Vector2 = Eigen::Matrix<T, 2, 1>;
 
-    using Vector2 = Matrix<2, 1>;
-    using Vector3 = Matrix<3, 1>;
+    template<typename T>
+    using Vector3 = Eigen::Matrix<T, 3, 1>;
+
+    using Vector2i = Vector2<Integer>;
+    using Vector3i = Vector3<Integer>;
+    using Vector2f = Vector2<Float>;
+    using Vector3f = Vector3<Float>;
 }

@@ -13,39 +13,39 @@ namespace RayTracer
             public:
                 using Base = Plane;
 
-                LimitedPlane(const Vector3& position,
-                    const std::vector<Vector3>& limitedPoints,
-                    const Vector3& normal,
+                LimitedPlane(const Vector3f& position,
+                    const std::vector<Vector3f>& limitedPoints,
+                    const Vector3f& normal,
                     const Color& diffuse = defaultDiffuse,
-                    const Type& refractionCoeff = defaultRefractionCoeff,
-                    const Type& refraction = defaultRefraction,
-                    const Type& reflection = defaultReflection,
-                    const Type& shininessCoeff = defaultShininessCoeff,
-                    const Type& specularCoeff = defaultSpecularCoeff,
-                    const Type& diffuseCoeff = defaultDiffuseCoeff,
+                    const Float& refractionCoeff = defaultRefractionCoeff,
+                    const Float& refraction = defaultRefraction,
+                    const Float& reflection = defaultReflection,
+                    const Float& shininessCoeff = defaultShininessCoeff,
+                    const Float& specularCoeff = defaultSpecularCoeff,
+                    const Float& diffuseCoeff = defaultDiffuseCoeff,
                     const Bitmap& texture = emptyTexture,
                     const Bitmap& normalTexture = emptyTexture,
-                    const Type& uvScale = defaultUVScale);
+                    const Float& uvScale = defaultUVScale);
 
-                LimitedPlane(const Vector3& position,
-                    const std::vector<Vector3>& limitedPoints,
+                LimitedPlane(const Vector3f& position,
+                    const std::vector<Vector3f>& limitedPoints,
                     const Color& diffuse = defaultDiffuse,
-                    const Type& refractionCoeff = defaultRefractionCoeff,
-                    const Type& refraction = defaultRefraction,
-                    const Type& reflection = defaultReflection,
-                    const Type& shininessCoeff = defaultShininessCoeff,
-                    const Type& specularCoeff = defaultSpecularCoeff,
-                    const Type& diffuseCoeff = defaultDiffuseCoeff,
+                    const Float& refractionCoeff = defaultRefractionCoeff,
+                    const Float& refraction = defaultRefraction,
+                    const Float& reflection = defaultReflection,
+                    const Float& shininessCoeff = defaultShininessCoeff,
+                    const Float& specularCoeff = defaultSpecularCoeff,
+                    const Float& diffuseCoeff = defaultDiffuseCoeff,
                     const Bitmap& texture = emptyTexture,
                     const Bitmap& normalTexture = emptyTexture,
-                    const Type& uvScale = defaultUVScale);
+                    const Float& uvScale = defaultUVScale);
 
-                Type Intersects(const Ray& ray) const override;
+                Float Intersects(const Ray& ray) const override;
 
-                bool Contains(const Vector3& point) const;
+                bool Contains(const Vector3f& point) const;
 
             protected:
-                std::vector<Vector3> m_limitPoints;
+                std::vector<Vector3f> m_limitPoints;
         };
     }
 }
